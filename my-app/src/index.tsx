@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import LoggedInContextProvider from "./components/LoggedInContext";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <LoggedInContextProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </LoggedInContextProvider>,
   document.getElementById('root')
 );
 

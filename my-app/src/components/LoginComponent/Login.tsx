@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from 'react';
 import Signup from '../SignupComponent/Signup';
-
+import { LoggedInContext } from "../LoggedInContext";
 
 
 const theme = createTheme();
@@ -23,6 +23,10 @@ const Login = () => {
     const [name, setName] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
     const [signup, setSignup] = useState(false);
+
+    const { loggedIn} = React.useContext(LoggedInContext);
+
+    console.log(loggedIn);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -43,8 +47,6 @@ const Login = () => {
   const handleSignUp = () => {
         setSignup(true);
   }
-
-
 
   return (
     <div>
