@@ -1,12 +1,12 @@
-
+import "./components/LoginComponent/Login";
+import Login from "./components/LoginComponent/Login";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>halla</h1>
-      </header>
+        <Login />
     </div>
+    
   );
 }
 
