@@ -1,34 +1,30 @@
-import * as React from "react";
+import React, { useState, createContext } from 'react';
 
 interface LoggedInContextInterface {
-    loggedIn: boolean;
-    setLoggedIn?: () => void
-    userId: String
-    setUserId?: () => void
+    isLoggedIn: boolean;
+    setIsLoggedIn: (isLoggedIn: boolean) => void;
+    userId: String;
+    setUserId: (userId: String) => void;
 }
 
 const LoggedInDefaultValues: LoggedInContextInterface = {
-    loggedIn: false,
+    isLoggedIn: false,
+    setIsLoggedIn: isLoggedIn => isLoggedIn,
     userId: "",
+    setUserId: userId => userId
  }
 
-export const LoggedInContext = React.createContext<LoggedInContextInterface>(LoggedInDefaultValues);
+export const LoggedInContext = createContext<LoggedInContextInterface>(LoggedInDefaultValues);
 
 const LoggedInContextProvider: React.FC = ({ children }) => {
-    const [loggedIn, setLoggedIn] = React.useState<boolean>(LoggedInDefaultValues.loggedIn);
-    const [userId, setUserId] = React.useState<String>(LoggedInDefaultValues.userId);
-
-    const toggleLoggedIn = () => {
-        setLoggedIn(!loggedIn);
-    }
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(LoggedInDefaultValues.isLoggedIn);
+    const [userId, setUserId] = useState<String>(LoggedInDefaultValues.userId);
 
     return (
         <LoggedInContext.Provider 
-        value={{
-            loggedIn,
-            userId,
-        }}>
-            {children}
+            value={{isLoggedIn, setIsLoggedIn, userId, setUserId}}
+            >
+                {children}
         </LoggedInContext.Provider>
     )
 }

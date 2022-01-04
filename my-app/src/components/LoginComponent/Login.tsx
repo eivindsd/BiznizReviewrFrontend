@@ -13,7 +13,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from 'react';
 import Signup from '../SignupComponent/Signup';
+import LandingPage from '../LandingPage/LandingPage';
 import { LoggedInContext } from "../LoggedInContext";
+import { Alert } from '@mui/material';
 
 
 const theme = createTheme();
@@ -22,36 +24,49 @@ const Login = () => {
 
     const [name, setName] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
+    const [formData, setFormData] = useState<FormData>();
     const [signup, setSignup] = useState(false);
+    const [wrongCredentials, setWrongCredentials] = useState(false);
 
-    const { loggedIn} = React.useContext(LoggedInContext);
+    const { isLoggedIn, setIsLoggedIn, userId, setUserId } = React.useContext(LoggedInContext);
 
-    console.log(loggedIn);
+    React.useEffect(() => {
+      setName("");
+      setPassword("");
+    }, [])
+
+    React.useEffect(() => {
+      setFormData(formData)
+    }, [formData])
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        setName(data.get("name")?.toString());
-        setPassword(data.get("password")?.toString());
-        // eslint-disable-next-line no-console
-        
-        //let response = await axios.get(`http://localhost:8080/api/user/name/Chris/xJjCavfqrkpbYbXhDxVX`);
+        console.log(name);
+        console.log(password);
         let response = await axios.get(`http://localhost:8080/api/user/name/${name}/${password}`);
-        console.log(response.data.name);
-        console.log(response.data.password);
         
-        (response.data.name === name && response.data.password === password ? console.log("yey") : console.log("ney")); 
+        response.data.name === name && 
+        response.data.password === password ? 
+            setIsLoggedIn(true) : setWrongCredentials(true);
+  };
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
   };
 
   const handleSignUp = () => {
-        setSignup(true);
+      setSignup(true);
   }
 
   return (
     <div>
+      {isLoggedIn && <LandingPage />}
       {signup && <Signup />}
-
       {!signup && (
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -80,6 +95,7 @@ const Login = () => {
                 name="name"
                 autoComplete="name"
                 autoFocus
+                onChange={handleNameChange}
               />
               <TextField
                 margin="normal"
@@ -90,7 +106,11 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handlePasswordChange}
               />
+              { wrongCredentials && (
+                <Alert severity="error">The credentials you typed is not correct... Try again!</Alert>
+              )}
               <Button
                 type="submit"
                 fullWidth
@@ -100,7 +120,7 @@ const Login = () => {
                 Log In
               </Button>
                 <Grid item>
-                  <Link href="#" variant="body2" onClick={() => handleSignUp()}>
+                  <Link href="#" variant="body2" onClick={handleSignUp}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
