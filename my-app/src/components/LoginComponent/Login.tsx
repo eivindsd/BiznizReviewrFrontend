@@ -24,21 +24,10 @@ const Login = () => {
 
     const [name, setName] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
-    const [formData, setFormData] = useState<FormData>();
     const [signup, setSignup] = useState(false);
     const [wrongCredentials, setWrongCredentials] = useState(false);
 
     const { isLoggedIn, setIsLoggedIn, userId, setUserId } = React.useContext(LoggedInContext);
-
-    React.useEffect(() => {
-      setName("");
-      setPassword("");
-    }, [])
-
-    React.useEffect(() => {
-      setFormData(formData)
-    }, [formData])
-
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

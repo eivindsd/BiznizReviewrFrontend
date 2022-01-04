@@ -23,10 +23,8 @@ const Signup = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        setName(data.get("name")?.toString());
-        setPassword(data.get("password")?.toString());
-        // eslint-disable-next-line no-console
+        console.log(name);
+        console.log(password);
         axios.post(`http://localhost:8080/api/user`, {
             name: name,
             password: password
@@ -40,6 +38,14 @@ const Signup = () => {
       const handleLogin = () => {
           setLogin(true);
       }
+
+      const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value);
+      };
+    
+      const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.currentTarget.value);
+      };
 
 
     return (
@@ -73,6 +79,7 @@ const Signup = () => {
                   label="Username"
                   name="name"
                   autoComplete="name"
+                  onChange={handleNameChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -84,6 +91,7 @@ const Signup = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handlePasswordChange}
                 />
               </Grid>
             </Grid>
