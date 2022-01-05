@@ -22,22 +22,26 @@ const theme = createTheme();
 
 const Login = () => {
 
-    const [name, setName] = useState<string | undefined>();
-    const [password, setPassword] = useState<string | undefined>();
+    const [name, setName] = useState<string>();
+    const [password, setPassword] = useState<string>();
     const [signup, setSignup] = useState(false);
     const [wrongCredentials, setWrongCredentials] = useState(false);
 
-    const { isLoggedIn, setIsLoggedIn, userId, setUserId } = React.useContext(LoggedInContext);
+    const { isLoggedIn, setIsLoggedIn, setUserId, setUserName } = React.useContext(LoggedInContext);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(name);
         console.log(password);
         let response = await axios.get(`http://localhost:8080/api/user/name/${name}/${password}`);
-        
-        response.data.name === name && 
-        response.data.password === password ? 
-            setIsLoggedIn(true) : setWrongCredentials(true);
+        if(response.data.name === name && 
+        response.data.password === password) {
+          setIsLoggedIn(true);
+          setUserId(response.data.userId);
+          setUserName(name);
+        } else {
+          setWrongCredentials(true);
+        }     
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Login from '../LoginComponent/Login';
 import axios from 'axios';
@@ -20,20 +22,42 @@ const Signup = () => {
     const [name, setName] = React.useState<string | undefined>();
     const [password, setPassword] = React.useState<string | undefined>();
     const [login, setLogin] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [userId, setUserId] = React.useState<string | undefined>();
+    const [missingCredentials, setMissingCredentials] = React.useState(false);
+
+    React.useEffect(() => {
+      generateUUID();
+    }, [])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(name);
-        console.log(password);
-        axios.post(`http://localhost:8080/api/user`, {
+        console.log(typeof name);
+        console.log(typeof password);
+        console.log(password?.length);
+        if(typeof name === 'undefined' 
+        || name.length === 0 
+        || typeof password === 'undefined'
+        || password.length === 0) {
+          setMissingCredentials(true);
+        } else {
+          setMissingCredentials(false);
+          axios.post(`http://localhost:8080/api/user`, {
+            userId: userId,
             name: name,
             password: password
         }).then(
             function(response) {
-                console.log(response)
+                response.status === 201 ? setOpen(true) : setOpen(false);
+                console.log(open);
             }
         )
+        }
       };
+
+      const generateUUID = () => {
+        setUserId(Math.floor(Math.random() * 10000000000000000000).toString());
+      }
 
       const handleLogin = () => {
           setLogin(true);
@@ -53,6 +77,16 @@ const Signup = () => {
         {login && <Login />}
         {!login && (
             <ThemeProvider theme={theme}>
+              <Box sx={{ width: '100%' }}>
+                <Collapse in={open}>
+                    <Alert
+                        action={
+                          <Button color="inherit" onClick={() => handleLogin()}>Log in</Button>}
+                        sx={{ mb: 2 }}>
+                        Successfully created user!
+                    </Alert>
+                </Collapse>
+            </Box>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -93,6 +127,9 @@ const Signup = () => {
                   autoComplete="new-password"
                   onChange={handlePasswordChange}
                 />
+                { missingCredentials && (
+                <Alert severity="error">You must enter both username and password...</Alert>
+              )}
               </Grid>
             </Grid>
             <Button

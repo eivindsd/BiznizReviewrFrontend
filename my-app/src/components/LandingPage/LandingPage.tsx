@@ -8,7 +8,7 @@ import Header from '../HeaderComponent/Header';
 
 const LandingPage = () => {
     const [open, setOpen] = React.useState(true);
-
+    
     return (
         <div>
             <Header />
