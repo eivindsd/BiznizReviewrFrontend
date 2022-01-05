@@ -6,7 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Header from '../HeaderComponent/Header';
 
-
 const LandingPage = () => {
     const [open, setOpen] = React.useState(true);
 
