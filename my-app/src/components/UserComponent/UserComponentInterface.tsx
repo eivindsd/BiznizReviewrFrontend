@@ -5,6 +5,7 @@ export interface IUser {
     password: String,
     reviews: IReview[],
     friends: IFriends[],
+    admin?: boolean
 }
 
 export interface IReview {

@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 
 const Header = () => {
-    const { setIsLoggedIn, userId, userName } = useContext(LoggedInContext);
+    const { setIsLoggedIn, userId, userName, isAdmin } = useContext(LoggedInContext);
     
     return (
         <div>
@@ -37,6 +37,9 @@ const Header = () => {
                         </Typography>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                            name: {userName}
+                        </Typography>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                           admin: {String(isAdmin)}
                         </Typography>
                         <Button color="inherit"><Link to={`user/${userId}`}>{userName}</Link></Button>
                         <Button color="inherit"><Link to="/stats">Stats</Link></Button>

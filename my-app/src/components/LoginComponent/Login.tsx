@@ -27,7 +27,7 @@ const Login = () => {
     const [signup, setSignup] = useState(false);
     const [wrongCredentials, setWrongCredentials] = useState(false);
 
-    const { isLoggedIn, setIsLoggedIn, setUserId, setUserName } = React.useContext(LoggedInContext);
+    const { isLoggedIn, setIsLoggedIn, setUserId, setUserName, setAdmin } = React.useContext(LoggedInContext);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,7 +39,11 @@ const Login = () => {
           setIsLoggedIn(true);
           setUserId(response.data.userId);
           setUserName(name);
-        } else {
+        } 
+        if (response.data.admin) {
+          setAdmin(response.data.admin)
+        }
+        else {
           setWrongCredentials(true);
         }     
   };
