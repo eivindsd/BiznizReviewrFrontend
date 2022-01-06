@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';

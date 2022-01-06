@@ -1,6 +1,6 @@
 import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper,  } from "@mui/material";
 import { IUser } from "../UserComponent/UserComponentInterface";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface IProps {
     users: IUser[]

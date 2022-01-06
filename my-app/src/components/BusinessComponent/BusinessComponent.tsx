@@ -1,6 +1,6 @@
 import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider } from "@mui/material"
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"

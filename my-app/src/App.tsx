@@ -9,7 +9,7 @@ import { UserComponent } from "./components/UserComponent/UserComponent";
 import { BusinessComponent } from "./components/BusinessComponent/BusinessComponent";
 
 function App() {
-  const { isLoggedIn, userId } = useContext(LoggedInContext);
+  const { isLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     
