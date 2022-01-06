@@ -5,18 +5,16 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Header from '../HeaderComponent/Header';
-<<<<<<< HEAD
 import { Button, TextField } from '@mui/material';
 import axios from 'axios';
 import { IUser } from '../UserComponent/UserComponentInterface';
 import { IBusiness } from '../BusinessComponent/BusinessInterface';
 import { LandingPageUser } from './LandingPageUser';
 import { LandingPageBusiness } from './LandingPageBusiness';
+import UserStats from '../StatisticsComponent/UserStats';
+
 
 const baseURL = "http://localhost:8080/api"
-=======
-import UserStats from '../StatisticsComponent/UserStats';
->>>>>>> main
 
 const LandingPage = () => {
     const [open, setOpen] = useState(true);
@@ -46,7 +44,7 @@ const LandingPage = () => {
     return (
         <div>
             <Header />
-            {/* <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%' }}>
                 <Collapse in={open}>
                     <Alert
                         action={
@@ -63,7 +61,6 @@ const LandingPage = () => {
                         Successfully logged in!
                     </Alert>
                 </Collapse>
-<<<<<<< HEAD
                 <TextField fullWidth label="fullWidth" id="User Search" value={search} onChange={e => setSearch(e.target.value)}/>
                 <Button type="button" onClick={searchUserAndBusiness}>Search</Button>
                 <div style={{ width: '100%' }}>
@@ -86,11 +83,7 @@ const LandingPage = () => {
                 </div>
                 
                 </Box>
-=======
-            </Box> */}
->>>>>>> main
-        </div>
-        
+            </div>        
     );
 };
 

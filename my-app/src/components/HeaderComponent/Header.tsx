@@ -17,7 +17,6 @@ const Header = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
-<<<<<<< HEAD
                         <IconButton
                             size="large"
                             edge="start"
@@ -30,11 +29,9 @@ const Header = () => {
                         <Button component="div" sx={{ flexGrow: 1 }}><Link to={`/`}>BiznizReviewr</Link>
                             
                         </Button>
-=======
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             BiznizReviewr
                         </Typography>
->>>>>>> main
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                            userId: {userId}
                         </Typography>
