@@ -17,6 +17,18 @@ const Header = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Button component="div" sx={{ flexGrow: 1 }}><Link to={`/`}>BiznizReviewr</Link>
+                            
+                        </Button>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             BiznizReviewr
                         </Typography>
@@ -26,6 +38,7 @@ const Header = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                            name: {userName}
                         </Typography>
+                        <Button color="inherit"><Link to={`user/${userId}`}>{userName}</Link></Button>
                         <Button color="inherit"><Link to="/stats">Stats</Link></Button>
                         <Button color="inherit" onClick={() => setIsLoggedIn(false)}>Logout</Button>
                     </Toolbar>
