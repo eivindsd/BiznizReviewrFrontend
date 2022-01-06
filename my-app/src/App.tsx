@@ -5,9 +5,11 @@ import { useContext, useEffect } from "react";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Statistics from "./components/StatisticsComponent/Statistics";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserComponent } from "./components/UserComponent/UserComponent";
+import { BusinessComponent } from "./components/BusinessComponent/BusinessComponent";
 
 function App() {
-  const { isLoggedIn } = useContext(LoggedInContext);
+  const { isLoggedIn, userId } = useContext(LoggedInContext);
 
   useEffect(() => {
     
@@ -21,6 +23,8 @@ function App() {
                                   {!isLoggedIn &&  <Login /> }
                                   </div>}/>
           <Route path="stats" element={<Statistics />} />
+          <Route path="user/:userId" element={<UserComponent />} />
+          <Route path="business/:businessId" element={<BusinessComponent />} />
         </Routes>
     </BrowserRouter>
     
