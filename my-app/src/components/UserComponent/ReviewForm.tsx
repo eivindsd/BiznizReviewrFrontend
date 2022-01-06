@@ -50,7 +50,7 @@ const ReviewForm: React.FC<IProps> = ({businessId, name}) => {
             />
             <Box
             sx={{'& > legend': { mt: 2 }}}>
-                <Typography component="legend">Controlled</Typography>
+                <Typography component="legend">Stars</Typography>
                 <Rating
                     name="simple-controlled"
                     value={stars}
