@@ -5,6 +5,7 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Header from '../HeaderComponent/Header';
+import UserStats from '../StatisticsComponent/UserStats';
 
 const LandingPage = () => {
     const [open, setOpen] = React.useState(true);
@@ -12,7 +13,7 @@ const LandingPage = () => {
     return (
         <div>
             <Header />
-            <Box sx={{ width: '100%' }}>
+            {/* <Box sx={{ width: '100%' }}>
                 <Collapse in={open}>
                     <Alert
                         action={
@@ -29,8 +30,9 @@ const LandingPage = () => {
                         Successfully logged in!
                     </Alert>
                 </Collapse>
-            </Box>
+            </Box> */}
         </div>
+        
     );
 };
 

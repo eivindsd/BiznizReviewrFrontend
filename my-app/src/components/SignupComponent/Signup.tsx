@@ -25,7 +25,7 @@ const Signup = () => {
     const [open, setOpen] = React.useState(false);
     const [userId, setUserId] = React.useState<string | undefined>();
     const [missingCredentials, setMissingCredentials] = React.useState(false);
-
+    
     React.useEffect(() => {
       generateUUID();
     }, [])
