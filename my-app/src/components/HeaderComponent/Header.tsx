@@ -38,7 +38,7 @@ const Header = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                            name: {userName}
                         </Typography>
-                        <Button color="inherit"><Link to={`user/${userId}`}>{userName}</Link></Button>
+                        <Button color="inherit"><Link to={`/user/${userId}`}>{userName}</Link></Button>
                         <Button color="inherit"><Link to="/stats">Stats</Link></Button>
                         <Button color="inherit" onClick={() => setIsLoggedIn(false)}>Logout</Button>
                     </Toolbar>

@@ -6,6 +6,7 @@ import './User.css'
 import { LoggedInContext } from "../LoggedInContext"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
+import Box from '@mui/material/Box';
 
 const baseURL = "http://localhost:8080/api/user"
 
@@ -36,8 +37,9 @@ export const UserComponent = () => {
         <Header />
         <h1>{user.name}</h1>
         <Divider/>
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader className="MuiTableHead-root">
+        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '1vw'}}>
+        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
                         <TableCell>BUSINESS NAME</TableCell>
@@ -58,10 +60,9 @@ export const UserComponent = () => {
                 </TableBody>
             </Table>
         </TableContainer>
-        <div>
-            <div className="friendList">
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
-                <Table aria-label="simple table" stickyHeader className="MuiTableHead-root">
+        <div className="friendList">
+            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
+                <Table aria-label="simple table">
                     <TableHead >
                         <TableRow className="MuiTableHead-root">
                             <TableCell>FriendList</TableCell>
@@ -77,9 +78,8 @@ export const UserComponent = () => {
                 </Table>
             </TableContainer>
             </div>
+            </Box>
         
-            
-        </div>
     </div>
     
     );

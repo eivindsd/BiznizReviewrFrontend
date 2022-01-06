@@ -3,7 +3,7 @@ import { IReview } from "../UserComponent/UserComponentInterface";
 export interface IBusiness {
     _id: String,
     businessId: string,
-    name: String,
+    name: string,
     country: String,
     city: String,
     state?: String,

@@ -4,12 +4,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"
+import ReviewForm from "../UserComponent/ReviewForm"
 
 const baseURL = "http://localhost:8080/api/business"
-
-interface IProps {
-    id: String
-}
 
 export const BusinessComponent = () => {
     const [business, setBusiness] = useState<IBusiness>({_id: "", businessId: "", name: "", country: "", city: "", reviews: [] })
@@ -36,10 +33,10 @@ export const BusinessComponent = () => {
         <h1>{business.name}</h1>
         <Divider/>
         <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader className="MuiTableHead-root">
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
-                        <TableCell>BUSINESS NAME</TableCell>
+                        
                         <TableCell align="left">REVIEW</TableCell>
                         <TableCell align="right">STARS</TableCell>
                     </TableRow>
@@ -49,15 +46,16 @@ export const BusinessComponent = () => {
                     <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                    <TableCell component="th" scope="row">{review.user_name}</TableCell>
-                    <TableCell align="left">{ellipsify(review.text)}</TableCell>
+                    <TableCell align="left">{review.text ? ellipsify(review.text): null}</TableCell>
                     <TableCell align="right">{review.stars}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
             </Table>
         </TableContainer>
+        <ReviewForm businessId={businessId} name={business.name}/>
         </div>
+        
     );
 
 
