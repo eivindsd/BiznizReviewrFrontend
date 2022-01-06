@@ -42,6 +42,13 @@ const Signup = () => {
           setMissingCredentials(true);
         } else {
           setMissingCredentials(false);
+          axios.post(`http://localhost:8080/api/graph/user/`, {
+            userId: userId,
+            name: name
+          }).then(function(response) {
+            response.status === 201 ? setOpen(true) : setOpen(false);
+            console.log(open);
+          });
           axios.post(`http://localhost:8080/api/user`, {
             userId: userId,
             name: name,
