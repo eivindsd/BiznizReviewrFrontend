@@ -31,8 +31,7 @@ const Login = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(name);
-        console.log(password);
+        
         let response = await axios.get(`http://localhost:8080/api/user/name/${name}/${password}`);
         if(response.data.name === name && 
         response.data.password === password) {

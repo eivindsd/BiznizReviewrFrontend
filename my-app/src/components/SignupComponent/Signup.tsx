@@ -32,9 +32,6 @@ const Signup = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(typeof name);
-        console.log(typeof password);
-        console.log(password?.length);
         if(typeof name === 'undefined' 
         || name.length === 0 
         || typeof password === 'undefined'
@@ -47,7 +44,6 @@ const Signup = () => {
             name: name
           }).then(function(response) {
             response.status === 201 ? setOpen(true) : setOpen(false);
-            console.log(open);
           });
           axios.post(`http://localhost:8080/api/user`, {
             userId: userId,
@@ -56,7 +52,6 @@ const Signup = () => {
         }).then(
             function(response) {
                 response.status === 201 ? setOpen(true) : setOpen(false);
-                console.log(open);
             }
         )
         }
