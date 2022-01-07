@@ -22,7 +22,7 @@ export const LandingPageBusiness = (props:IProps) => {
     if (props.businesses) {
         return (
         <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
-            <Table aria-label="simple table" stickyHeader className="MuiTableHead-root">
+            <Table aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
                         <TableCell>BUSINESSES</TableCell>

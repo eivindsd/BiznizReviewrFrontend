@@ -1,9 +1,5 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Collapse from '@mui/material/Collapse';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
 import Header from '../HeaderComponent/Header';
 import { Button, TextField } from '@mui/material';
 import axios from 'axios';
@@ -11,16 +7,18 @@ import { IUser } from '../UserComponent/UserComponentInterface';
 import { IBusiness } from '../BusinessComponent/BusinessInterface';
 import { LandingPageUser } from './LandingPageUser';
 import { LandingPageBusiness } from './LandingPageBusiness';
-import UserStats from '../StatisticsComponent/UserStats';
+import { LoggedInContext } from '../LoggedInContext';
+import BusinessFormAdmin from './BusinessFormAdmin';
+import "./Landingpage.css";
 
 
 const baseURL = "http://localhost:8080/api"
 
 const LandingPage = () => {
-    const [open, setOpen] = useState(true);
     const [users, setUsers] = useState<IUser[]>([])
     const [businesses, setBusinesses] = useState<IBusiness[]>([])
     const [search, setSearch] = useState<String>("")
+    const { isAdmin } = useContext(LoggedInContext);
 
     const searchUserAndBusiness = () => {
         if (search.length != 0) {
@@ -44,25 +42,9 @@ const LandingPage = () => {
     return (
         <div>
             <Header />
-            <Box sx={{ width: '100%' }}>
-                <Collapse in={open}>
-                    <Alert
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                setOpen(false);
-                                }}>
-                                <CloseIcon fontSize="inherit" />
-                            </IconButton>}
-                        sx={{ mb: 2 }}>
-                        Successfully logged in!
-                    </Alert>
-                </Collapse>
-                <TextField fullWidth label="fullWidth" id="User Search" value={search} onChange={e => setSearch(e.target.value)}/>
-                <Button type="button" onClick={searchUserAndBusiness}>Search</Button>
+            <Box sx={{ width: '100%', marginTop: '1vw'}}>
+                <TextField fullWidth label="Search for username or business name" id="User Search" value={search} onChange={e => setSearch(e.target.value)}/>
+                <Button variant="contained" style={{ width: '100%', marginBottom: '1vw'}}  onClick={searchUserAndBusiness}>Search</Button>
                 <div style={{ width: '100%' }}>
                     <Box
                             sx={{
@@ -71,18 +53,13 @@ const LandingPage = () => {
                                 m: 1,
                                 bgcolor: 'background.paper',
                                
-                            }}
-                               
-                               >
-                            <LandingPageUser users={users}/>   
-                            <LandingPageBusiness businesses={businesses}/>  
-                           
-                        
-                    </Box>                
-
+                            }}>
+                            <LandingPageUser users={users}/>
+                            <LandingPageBusiness businesses={businesses}/>
+                    </Box>         
                 </div>
-                
                 </Box>
+                {isAdmin && <BusinessFormAdmin />}
             </div>        
     );
 };

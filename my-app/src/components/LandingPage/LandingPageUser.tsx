@@ -1,7 +1,7 @@
 import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper, IconButton,  } from "@mui/material";
 import { IUser } from "../UserComponent/UserComponentInterface";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LoggedInContext }from "../LoggedInContext";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -12,17 +12,16 @@ interface IProps {
 }
 const baseURL = "http://localhost:8080/api/user"
 
-export const LandingPageUser = (props:IProps) => {
+export const LandingPageUser: React.FC<IProps> = ({users}) => {
     const {isAdmin} = useContext(LoggedInContext)
 
     const onDeleteClick = (id:string) => {
         axios.delete(`${baseURL}/${id}`)
     }
-
-    if (props.users) {
-        return (
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
-            <Table aria-label="simple table" stickyHeader className="MuiTableHead-root">
+    
+    return (
+            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
+            <Table aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
                         <TableCell>USERS</TableCell>
@@ -30,7 +29,7 @@ export const LandingPageUser = (props:IProps) => {
                     </TableRow>
                 </TableHead>
                 <TableBody className="reviewContainer">
-                {props.users.map((user) => (
+                {users.map((user) => (
                     <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={user.userId}
@@ -47,28 +46,6 @@ export const LandingPageUser = (props:IProps) => {
             </Table>
         </TableContainer>
         )
-    } else {
-        return (
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
-            <Table aria-label="simple table" stickyHeader className="MuiTableHead-root">
-                <TableHead >
-                    <TableRow className="MuiTableHead-root">
-                        <TableCell>USERS</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody className="reviewContainer">
-                    <TableRow
-                    sx={{ '&:last-child te, &:last-child tf': { border: 0 } }}
-                    key={"id"}
-                    >
-                    <TableCell component="th" scope="row"> No User</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
-        )
 
     }
     
-
-}
