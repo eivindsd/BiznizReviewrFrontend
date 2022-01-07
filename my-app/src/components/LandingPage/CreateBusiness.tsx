@@ -8,7 +8,7 @@ import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
-const BusinessFormAdmin = () => {
+const CreateBusiness = () => {
     const [name, setName] = React.useState<string>();
     const [country, setCountry] = React.useState<string>();
     const [city, setCity] = React.useState<string>();
@@ -46,6 +46,13 @@ const BusinessFormAdmin = () => {
               city: city,
               state: state,
               categories: categoriesArray
+          }).then(
+            function(response) {
+                response.status === 201 ? setOpen(true) : setOpen(false);
+            }
+          )
+          axios.post(`http://localhost:8080/api/graph/business`,{
+              name: name
           }).then(
             function(response) {
                 response.status === 201 ? setOpen(true) : setOpen(false);
@@ -135,4 +142,4 @@ const BusinessFormAdmin = () => {
     );
 };
 
-export default BusinessFormAdmin;
+export default CreateBusiness;
