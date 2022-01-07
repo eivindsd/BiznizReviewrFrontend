@@ -8,7 +8,7 @@ import ReviewForm from "../UserComponent/ReviewForm"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {LoggedInContext} from "../LoggedInContext"
 import BusinessStats from "../StatisticsComponent/BusinessStats"
-
+import UpdateBusiness from "./UpdateBusiness";
 
 const baseURL = "http://localhost:8080/api"
 
@@ -143,6 +143,7 @@ export const BusinessComponent = () => {
             </Box>
 
         </div>
+        {isAdmin && <UpdateBusiness businessId={businessIdURL}/> }
         </div>
         
     );

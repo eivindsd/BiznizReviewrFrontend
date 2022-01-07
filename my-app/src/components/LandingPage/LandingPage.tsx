@@ -8,7 +8,7 @@ import { IBusiness } from '../BusinessComponent/BusinessInterface';
 import { LandingPageUser } from './LandingPageUser';
 import { LandingPageBusiness } from './LandingPageBusiness';
 import { LoggedInContext } from '../LoggedInContext';
-import BusinessFormAdmin from './BusinessFormAdmin';
+import CreateBusiness from './CreateBusiness';
 import "./Landingpage.css";
 
 
@@ -73,7 +73,7 @@ const LandingPage = () => {
                     </Box>         
                 </div>
                 </Box>
-                {isAdmin && <BusinessFormAdmin />}
+                {isAdmin && <CreateBusiness />}
             </div>        
     );
 };
