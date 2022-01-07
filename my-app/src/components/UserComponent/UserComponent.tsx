@@ -1,7 +1,7 @@
 import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton } from "@mui/material"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import { IUser } from "./UserComponentInterface"
+import { IFriends, IUser } from "./UserComponentInterface"
 import './User.css'
 import { LoggedInContext } from "../LoggedInContext"
 import { useParams } from "react-router-dom"
@@ -13,14 +13,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const baseURL = "http://localhost:8080/api"
 
 export const UserComponent = () => {
-    const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: [], friends: []})
+    const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: []})
+    const [friends, setFriends] = useState<IFriends[]>([])
     const {userId, isAdmin} = useContext(LoggedInContext);
     
     let {userIdURL} = useParams();
     useEffect(() => {
         axios.get(`${baseURL}/user/${userIdURL}`).then((response) => {
+            console.log(response.data);
             setUser(response.data);
         });
+        axios.get(`${baseURL}/graph/user/following/${userIdURL}`).then((response) => {
+            console.log(response.data);
+            setFriends(response.data);
+        })
+        
     }, [])
 
 
@@ -78,13 +85,13 @@ export const UserComponent = () => {
                 <Table aria-label="simple table">
                     <TableHead >
                         <TableRow className="MuiTableHead-root">
-                            <TableCell>FriendList</TableCell>
+                            <TableCell>Following</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody className="reviewContainer">
-                    {user.friends.map((friend) => (
-                        <TableRow key={friend.friendId}>
-                            <TableCell scope="row">{friend.friendName}</TableCell>
+                    {friends.map((friend) => (
+                        <TableRow key={friend.userId}>
+                            <TableCell scope="row">{friend.name}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>

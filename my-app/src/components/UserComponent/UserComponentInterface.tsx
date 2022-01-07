@@ -4,7 +4,6 @@ export interface IUser {
     name: string,
     password: string,
     reviews: IReview[],
-    friends: IFriends[],
     admin?: boolean
 }
 
@@ -19,6 +18,6 @@ export interface IReview {
 }
 
 export interface IFriends {
-    friendId: string,
-    friendName: string,
+    userId: string,
+    name: string,
 }
