@@ -1,14 +1,24 @@
-import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper,  } from "@mui/material";
+import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper, IconButton,  } from "@mui/material";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { IBusiness } from "../BusinessComponent/BusinessInterface";
+import { LoggedInContext } from "../LoggedInContext";
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 interface IProps {
     businesses: IBusiness[]
 }
 
-export const LandingPageBusiness = (props:IProps) => {
+const baseURL = "http://localhost:8080/api/business"
 
-    console.log(props.businesses)
+export const LandingPageBusiness = (props:IProps) => {
+    const {isAdmin} = useContext(LoggedInContext)
+
+    const onDeleteClick = (id:string) => {
+        axios.delete(`${baseURL}/${id}`)
+    }
+
     if (props.businesses) {
         return (
         <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
@@ -16,6 +26,7 @@ export const LandingPageBusiness = (props:IProps) => {
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
                         <TableCell>BUSINESSES</TableCell>
+                        {isAdmin && <TableCell align="right">DELETE</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody className="reviewContainer">
@@ -25,6 +36,11 @@ export const LandingPageBusiness = (props:IProps) => {
                     key={business.businessId}
                     >
                     <TableCell component="th" scope="row"> <Link to={`business/${business.businessId}`}>{business.name}</Link></TableCell>
+                    {isAdmin && <TableCell align="right">
+                            <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(business.businessId)}>
+                                <DeleteIcon fontSize="inherit"/>
+                            </IconButton>
+                        </TableCell>}
                     </TableRow>
                 ))}
                 </TableBody>

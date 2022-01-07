@@ -1,20 +1,30 @@
-import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider } from "@mui/material"
+import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton } from "@mui/material"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"
 import ReviewForm from "../UserComponent/ReviewForm"
+import DeleteIcon from '@mui/icons-material/Delete';
+import {LoggedInContext} from "../LoggedInContext"
 
-const baseURL = "http://localhost:8080/api/business"
+
+const baseURL = "http://localhost:8080/api"
 
 export const BusinessComponent = () => {
     const [business, setBusiness] = useState<IBusiness>({_id: "", businessId: "", name: "", country: "", city: "", reviews: [] })
+    const {isAdmin} = useContext(LoggedInContext)
 
-    let {businessId} = useParams();
+    let {businessIdURL} = useParams();
+
+    const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
+        console.log(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
+        
+        axios.delete(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
+    }
 
     useEffect(() => {
-        axios.get(`${baseURL}/${businessId}`).then((response) => {
+        axios.get(`${baseURL}/business/${businessIdURL}`).then((response) => {
             setBusiness(response.data);
         });
     }, [])
@@ -39,6 +49,7 @@ export const BusinessComponent = () => {
                         
                         <TableCell align="left">REVIEW</TableCell>
                         <TableCell align="right">STARS</TableCell>
+                        {isAdmin && <TableCell align="right">DELETE</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody className="reviewContainer">
@@ -48,12 +59,17 @@ export const BusinessComponent = () => {
                     >
                     <TableCell align="left">{review.text ? ellipsify(review.text): null}</TableCell>
                     <TableCell align="right">{review.stars}</TableCell>
+                    {isAdmin && <TableCell align="right">
+                            <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(review.businessId, review.userId, review.reviewId)}>
+                                <DeleteIcon fontSize="inherit"/>
+                            </IconButton>
+                        </TableCell>}
                     </TableRow>
                 ))}
                 </TableBody>
             </Table>
         </TableContainer>
-        <ReviewForm businessId={businessId} name={business.name}/>
+        <ReviewForm businessId={businessIdURL} name={business.name}/>
         </div>
         
     );

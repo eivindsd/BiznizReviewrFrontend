@@ -1,23 +1,24 @@
 export interface IUser {
-    _id: String,
+    _id: string,
     userId: string,
-    name: String,
-    password: String,
+    name: string,
+    password: string,
     reviews: IReview[],
     friends: IFriends[],
+    admin?: boolean
 }
 
 export interface IReview {
-    reviewId: String,
-    businessId: String,
-    userId: String,
-    stars: Number,
-    text: String,
-    business_name?: String
-    user_name?: String
+    reviewId: string,
+    businessId: string,
+    userId: string,
+    stars: number,
+    text: string,
+    business_name?: string
+    user_name?: string
 }
 
 export interface IFriends {
-    friendId: String,
-    friendName: String,
+    friendId: string,
+    friendName: string,
 }
