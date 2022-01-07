@@ -29,7 +29,7 @@ export const LandingPageUser: React.FC<IProps> = ({users}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody className="reviewContainer">
-                {users.map((user) => (
+                {users && users.map((user) => (
                     <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={user.userId}

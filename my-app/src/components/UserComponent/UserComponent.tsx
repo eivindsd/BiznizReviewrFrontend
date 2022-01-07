@@ -15,7 +15,7 @@ const baseURL = "http://localhost:8080/api"
 export const UserComponent = () => {
     const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: [], friends: []})
     const {userId, isAdmin} = useContext(LoggedInContext);
-    
+ 
     let {userIdURL} = useParams();
     useEffect(() => {
         axios.get(`${baseURL}/user/${userIdURL}`).then((response) => {
@@ -23,7 +23,7 @@ export const UserComponent = () => {
         });
     }, [])
 
-
+    
     const ellipsify = (str:String) => {
         if (str.length > 100) {
             return (str.substring(0, 100) + "...");
@@ -44,7 +44,7 @@ export const UserComponent = () => {
         <h1>{user.name}'s page</h1>
         <Divider/>
         <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '1vw'}}>
-        <TableContainer component={Paper} style={{maxHeight: 600, overflow: 'auto', width: '50vw'}} >
+        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
             <Table  aria-label="simple table">
                 <TableHead >
                     <TableRow>
@@ -74,7 +74,7 @@ export const UserComponent = () => {
             </Table>
         </TableContainer>
         <div className="friendList">
-            <TableContainer component={Paper} style={{maxHeight: 600, overflow: 'auto', width: '50vw'}} >
+            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
                 <Table aria-label="simple table">
                     <TableHead >
                         <TableRow className="MuiTableHead-root">

@@ -1,4 +1,4 @@
-import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton } from "@mui/material"
+import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton, Card, Typography, Container, Box, List, ListItem, ListItemText } from "@mui/material"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -6,7 +6,9 @@ import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"
 import ReviewForm from "../UserComponent/ReviewForm"
 import DeleteIcon from '@mui/icons-material/Delete';
-import {LoggedInContext} from "../LoggedInContext";
+import {LoggedInContext} from "../LoggedInContext"
+import BusinessStats from "../StatisticsComponent/BusinessStats"
+
 
 const baseURL = "http://localhost:8080/api"
 
@@ -42,6 +44,8 @@ export const BusinessComponent = () => {
             return str;
         }
     }
+    console.log("categories ", business.categories)
+    console.log("toptags", business.topTags)
     return (
     <div>
         <Header />
@@ -74,6 +78,71 @@ export const BusinessComponent = () => {
             </Table>
         </TableContainer>
         <ReviewForm businessId={businessIdURL} name={business.name}/>
+        <div style={{ width: '100%' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    p: 1,
+                    m: 1,
+                    bgcolor: 'background.paper',
+            }}
+            >
+            <BusinessStats />
+            <div style={{ width: '24%', paddingRight: '1vw'}}>
+                <Card sx={{maxWidth:"50vw"}}>
+                    <Typography variant="h4" align="center">Business Info</Typography>
+                    <Divider></Divider>
+                    <Typography>Country: {business.country}</Typography>
+                    {business.state && <Typography>State: {business.state}</Typography>}
+                    <Typography>City: {business.city}</Typography>
+            
+                </Card>
+            </div>
+            <div style={{ width: '24%', paddingRight: '1vw'}}>
+            {business.topTags &&
+                    <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"500vw"}} >
+                    <Table>
+                        <TableHead>
+                            <TableRow className="MuiTableHead-root">
+                                <TableCell>Categories</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {business.topTags && business.topTags.map((tag) =>
+                            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }}}>
+                                <TableCell component="th" scope="row"> {tag} </TableCell>
+                            </TableRow>
+                        )}
+                            
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+                    }
+                    {business.categories &&
+                     <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"500vw"}} >
+                        <Table>
+                            <TableHead>
+                                <TableRow className="MuiTableHead-root">
+                                    <TableCell>Categories</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {business.categories && business.categories.map((tag) =>
+                                <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }}}>
+                                    <TableCell component="th" scope="row"> {tag} </TableCell>
+                                </TableRow>
+                            )}
+                                
+                            </TableBody>
+
+                        </Table>
+                    </TableContainer>
+                    }
+            </div>
+            </Box>
+
+        </div>
         </div>
         
     );

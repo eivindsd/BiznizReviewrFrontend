@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Header from '../HeaderComponent/Header';
-import { Button, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import axios from 'axios';
 import { IUser } from '../UserComponent/UserComponentInterface';
 import { IBusiness } from '../BusinessComponent/BusinessInterface';
@@ -17,25 +17,31 @@ const baseURL = "http://localhost:8080/api"
 const LandingPage = () => {
     const [users, setUsers] = useState<IUser[]>([])
     const [businesses, setBusinesses] = useState<IBusiness[]>([])
-    const [search, setSearch] = useState<String>("")
+    const [userSearch, setUserSearch] = useState<String>("")
+    const [businessSearch, setBusinessSearch] = useState<String>("")
     const { isAdmin } = useContext(LoggedInContext);
 
-    const searchUserAndBusiness = () => {
-        if (search.length != 0) {
-            axios.get(`${baseURL}/user/search/${search}`).then((response) => {
-                setUsers(response.data)
-            }).catch(error => {console.log(error)})
-            axios.get(`${baseURL}/business/search/${search}`).then((response) => {
-                setBusinesses(response.data)
-            })
-        }
-        if (search.length == 0) {
+    const searchUser = () => {
+        if (userSearch.length == 0) {
             axios.get(`${baseURL}/user`).then((response) => {
                 setUsers(response.data);
             })
+        }
+        else {
+            axios.get(`${baseURL}/user/search/${userSearch}`).then((response) => {
+                setUsers(response.data) })
+        }
+    }
+
+    const searchBusiness = () => {
+        if (businessSearch.length == 0) {
             axios.get(`${baseURL}/business`).then((response) => {
                 setBusinesses(response.data)
             })
+        }
+        else {
+            axios.get(`${baseURL}/business/search/${businessSearch}`).then((response) => {
+                setBusinesses(response.data) })
         }
     }
       
@@ -43,8 +49,16 @@ const LandingPage = () => {
         <div>
             <Header />
             <Box sx={{ width: '100%', marginTop: '1vw'}}>
-                <TextField fullWidth label="Search for username or business name" id="User Search" value={search} onChange={e => setSearch(e.target.value)}/>
-                <Button variant="contained" style={{ width: '100%', marginBottom: '1vw'}}  onClick={searchUserAndBusiness}>Search</Button>
+                <Grid container >
+                    <Grid container item xs={6} direction="column" maxWidth="50%">
+                        <TextField fullWidth label="Search by user name" id="User Search" value={userSearch} onChange={e => setUserSearch(e.target.value)}/>
+                        <Button variant="contained" style={{ width: '100%', marginBottom: '1vw'}}  onClick={searchUser}>Search</Button>
+                    </Grid>
+                    <Grid container item xs={6} direction="column" maxWidth="50%">
+                        <TextField fullWidth label="Search by business name" id="User Search" value={businessSearch} onChange={e => setBusinessSearch(e.target.value)}/>
+                        <Button variant="contained" style={{ width: '100%', marginBottom: '1vw'}}  onClick={searchBusiness}>Search</Button>
+                    </Grid>
+                </Grid>
                 <div style={{ width: '100%' }}>
                     <Box
                             sx={{
