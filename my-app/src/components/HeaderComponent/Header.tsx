@@ -1,4 +1,4 @@
-import React, { useContext }  from 'react';
+import { useContext }  from 'react';
 import { LoggedInContext } from "../LoggedInContext";
 import Typography from '@mui/material/Typography';
 import { Toolbar } from '@mui/material';
@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
 
 const Header = () => {
-    const { isLoggedIn, setAdmin, setIsLoggedIn, userId, userName, isAdmin } = useContext(LoggedInContext);
+    const { setAdmin, setIsLoggedIn, userId, userName, isAdmin } = useContext(LoggedInContext);
     
     return (
         <div>

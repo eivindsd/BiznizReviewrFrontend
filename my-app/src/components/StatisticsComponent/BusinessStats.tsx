@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import { LoggedInContext } from "../LoggedInContext";
 import axios from 'axios';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,9 +7,7 @@ import { useParams } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Box } from '@mui/material';
-import { maxWidth } from '@mui/system';
 import '../BusinessComponent/Business.css'
-import { tokenToString } from 'typescript';
 
 interface amountOfStarsBusiness {
     //businessId muligens
@@ -32,13 +29,10 @@ const BusinessStats = () => {
     let {businessIdURL} = useParams();
 
     const getAmountOfStarsPerBusiness = async () => {
-        //her må det endres til faktisk businessId
-        console.log(`http://localhost:8080/api/aggregations/amountofstarsperbusiness/${businessIdURL}`)
         setAmountOfStarsBusiness(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperbusiness/${businessIdURL}`)).data);
     }
 
     const calculatePercentage = (num: number) => {
-        console.log(amountOfStarsBusiness)
         const tot: number = Number((Number(amountOfStarsBusiness?.amountFive) + Number(amountOfStarsBusiness?.amountFour) + Number(amountOfStarsBusiness?.amountThree) +
         Number(amountOfStarsBusiness?.amountTwo) + Number(amountOfStarsBusiness?.amountOne)))
         if (tot != 0) {

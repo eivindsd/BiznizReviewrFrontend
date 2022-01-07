@@ -31,7 +31,6 @@ const UserStats = () => {
     }
 
     const calculatePercentage = (num: number) => {
-        console.log(amountOfStarsUser)
         const tot: number = Number((Number(amountOfStarsUser?.amountFive) + Number(amountOfStarsUser?.amountFour) + Number(amountOfStarsUser?.amountThree) +
         Number(amountOfStarsUser?.amountTwo) + Number(amountOfStarsUser?.amountOne)))
         if (tot != 0) {
