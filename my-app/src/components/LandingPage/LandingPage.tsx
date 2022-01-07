@@ -8,7 +8,7 @@ import { IBusiness } from '../BusinessComponent/BusinessInterface';
 import { LandingPageUser } from './LandingPageUser';
 import { LandingPageBusiness } from './LandingPageBusiness';
 import { LoggedInContext } from '../LoggedInContext';
-import BusinessFormAdmin from './BusinessFormAdmin';
+import CreateBusiness from './CreateBusiness';
 import "./Landingpage.css";
 
 
@@ -21,7 +21,7 @@ const LandingPage = () => {
     const { isAdmin } = useContext(LoggedInContext);
 
     const searchUserAndBusiness = () => {
-        if (search.length != 0) {
+        if (search.length !== 0) {
             axios.get(`${baseURL}/user/search/${search}`).then((response) => {
                 setUsers(response.data)
             }).catch(error => {console.log(error)})
@@ -29,7 +29,7 @@ const LandingPage = () => {
                 setBusinesses(response.data)
             })
         }
-        if (search.length == 0) {
+        if (search.length === 0) {
             axios.get(`${baseURL}/user`).then((response) => {
                 setUsers(response.data);
             })
@@ -59,7 +59,7 @@ const LandingPage = () => {
                     </Box>         
                 </div>
                 </Box>
-                {isAdmin && <BusinessFormAdmin />}
+                {isAdmin && <CreateBusiness />}
             </div>        
     );
 };

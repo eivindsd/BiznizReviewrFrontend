@@ -7,6 +7,7 @@ import { IBusiness } from "./BusinessInterface"
 import ReviewForm from "../UserComponent/ReviewForm"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {LoggedInContext} from "../LoggedInContext";
+import UpdateBusiness from "./UpdateBusiness";
 
 const baseURL = "http://localhost:8080/api"
 
@@ -74,6 +75,7 @@ export const BusinessComponent = () => {
             </Table>
         </TableContainer>
         <ReviewForm businessId={businessIdURL} name={business.name}/>
+        {isAdmin && <UpdateBusiness businessId={businessIdURL}/> }
         </div>
         
     );

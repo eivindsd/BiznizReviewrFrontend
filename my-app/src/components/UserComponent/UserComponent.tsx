@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateUserForm from "./UpdateUserForm"
 
 
 const baseURL = "http://localhost:8080/api"
@@ -99,7 +100,7 @@ export const UserComponent = () => {
             </TableContainer>
             </div>
             </Box>
-        
+        <UpdateUserForm />
     </div>
     
     );
