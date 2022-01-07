@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"
+import ReviewForm from "../UserComponent/ReviewForm"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {LoggedInContext} from "../LoggedInContext"
 
@@ -42,10 +43,10 @@ export const BusinessComponent = () => {
         <h1>{business.name}</h1>
         <Divider/>
         <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table" stickyHeader className="MuiTableHead-root">
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
-                        <TableCell>BUSINESS NAME</TableCell>
+                        
                         <TableCell align="left">REVIEW</TableCell>
                         <TableCell align="right">STARS</TableCell>
                         {isAdmin && <TableCell align="right">DELETE</TableCell>}
@@ -56,8 +57,7 @@ export const BusinessComponent = () => {
                     <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                    <TableCell component="th" scope="row">{review.user_name}</TableCell>
-                    <TableCell align="left">{ellipsify(review.text)}</TableCell>
+                    <TableCell align="left">{review.text ? ellipsify(review.text): null}</TableCell>
                     <TableCell align="right">{review.stars}</TableCell>
                     {isAdmin && <TableCell align="right">
                             <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(review.businessId, review.userId, review.reviewId)}>
@@ -69,7 +69,9 @@ export const BusinessComponent = () => {
                 </TableBody>
             </Table>
         </TableContainer>
+        <ReviewForm businessId={businessIdURL} name={business.name}/>
         </div>
+        
     );
 
 

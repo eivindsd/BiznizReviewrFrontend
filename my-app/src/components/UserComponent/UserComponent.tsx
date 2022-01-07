@@ -6,6 +6,7 @@ import './User.css'
 import { LoggedInContext } from "../LoggedInContext"
 import { useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
+import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -39,7 +40,8 @@ export const UserComponent = () => {
         <Header />
         <h1>{user.name}</h1>
         <Divider/>
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
+        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '1vw'}}>
+        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead >
                     <TableRow>
@@ -68,9 +70,8 @@ export const UserComponent = () => {
                 </TableBody>
             </Table>
         </TableContainer>
-        <div>
-            <div className="friendList">
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
+        <div className="friendList">
+            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
                 <Table aria-label="simple table">
                     <TableHead >
                         <TableRow className="MuiTableHead-root">
@@ -87,9 +88,8 @@ export const UserComponent = () => {
                 </Table>
             </TableContainer>
             </div>
+            </Box>
         
-            
-        </div>
     </div>
     
     );
