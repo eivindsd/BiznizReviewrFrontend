@@ -18,15 +18,9 @@ export const BusinessComponent = () => {
     const {isAdmin} = useContext(LoggedInContext);
     const [open, setOpen] = useState(false);
 
-
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
     let {businessIdURL} = useParams();
 
     const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
-        console.log(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
-        
         axios.delete(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
     }
 
@@ -36,16 +30,6 @@ export const BusinessComponent = () => {
         });
     }, [])
 
-    const ellipsify = (str:String) => {
-        if (str.length > 100) {
-            return (str.substring(0, 100) + "...");
-        }
-        else {
-            return str;
-        }
-    }
-    console.log("categories ", business.categories)
-    console.log("toptags", business.topTags)
     return (
     <div>
         <Header />

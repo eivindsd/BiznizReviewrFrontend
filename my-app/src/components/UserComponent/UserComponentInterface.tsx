@@ -21,3 +21,8 @@ export interface IFriends {
     userId: string,
     name: string,
 }
+
+export interface ISuggestedUser {
+    userId: string,
+    name: string
+}

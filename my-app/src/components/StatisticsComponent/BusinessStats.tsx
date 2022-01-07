@@ -33,10 +33,12 @@ const BusinessStats = () => {
 
     const getAmountOfStarsPerBusiness = async () => {
         //her må det endres til faktisk businessId
+        console.log(`http://localhost:8080/api/aggregations/amountofstarsperbusiness/${businessIdURL}`)
         setAmountOfStarsBusiness(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperbusiness/${businessIdURL}`)).data);
     }
 
     const calculatePercentage = (num: number) => {
+        console.log(amountOfStarsBusiness)
         const tot: number = Number((Number(amountOfStarsBusiness?.amountFive) + Number(amountOfStarsBusiness?.amountFour) + Number(amountOfStarsBusiness?.amountThree) +
         Number(amountOfStarsBusiness?.amountTwo) + Number(amountOfStarsBusiness?.amountOne)))
         if (tot != 0) {
@@ -55,7 +57,7 @@ const BusinessStats = () => {
         <Card sx={{ maxWidth: '50vw'}}>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                Business: {amountOfStarsBusiness?.businessid}
+                Business:
                 </Typography>
                 <Box sx={{display:'flex', flexWrap: 'wrap', alignItems: 'center', maxWidth: '50vw'}}>
                     <Typography> 5 stars: </Typography>
@@ -77,25 +79,7 @@ const BusinessStats = () => {
                     <Typography> 1 stars: </Typography>
                     <ProgressBar variant="info" label={`${Math.round(calculatePercentage(Number(amountOfStarsBusiness?.amountOne)))}%`} now={calculatePercentage(Number(amountOfStarsBusiness?.amountOne))} />
                 </Box>
-                
-                
-                
-
-                {/* <Typography >
-                Number of 5-stars reviews given: {amountOfStarsBusiness?.amountFive}
-                </Typography>
-                <Typography >
-                Number of 4-stars reviews given: {amountOfStarsBusiness?.amountFour}
-                </Typography>
-                <Typography >
-                Number of 3-stars reviews given: {amountOfStarsBusiness?.amountThree}
-                </Typography>
-                <Typography >
-                Number of 2-stars reviews given: {amountOfStarsBusiness?.amountTwo}
-                </Typography>
-                <Typography >
-                Number of 1-stars reviews given: {amountOfStarsBusiness?.amountOne}
-                </Typography> */}
+       
             </CardContent>
                 
         </Card>
