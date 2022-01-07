@@ -1,7 +1,7 @@
 import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper, IconButton,  } from "@mui/material";
 import { IUser } from "../UserComponent/UserComponentInterface";
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { LoggedInContext }from "../LoggedInContext";
 import DeleteIcon from '@mui/icons-material/Delete';
 
