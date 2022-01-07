@@ -14,14 +14,15 @@ const baseURL = "http://localhost:8080/api"
 
 export const UserComponent = () => {
     const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: [], friends: []})
-    const {userId, isAdmin} = useContext(LoggedInContext)
- 
+    const {userId, isAdmin} = useContext(LoggedInContext);
+    
     let {userIdURL} = useParams();
     useEffect(() => {
         axios.get(`${baseURL}/user/${userIdURL}`).then((response) => {
             setUser(response.data);
         });
     }, [])
+
 
     const ellipsify = (str:String) => {
         if (str.length > 100) {
@@ -32,17 +33,19 @@ export const UserComponent = () => {
         }
     }
 
+
     const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
         axios.delete(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
     }
+
     return (
     <div>
         <Header />
-        <h1>{user.name}</h1>
+        <h1>{user.name}'s page</h1>
         <Divider/>
         <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '1vw'}}>
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} style={{maxHeight: 600, overflow: 'auto', width: '50vw'}} >
+            <Table  aria-label="simple table">
                 <TableHead >
                     <TableRow>
                         <TableCell>BUSINESS NAME</TableCell>
@@ -58,7 +61,7 @@ export const UserComponent = () => {
                     key = {review.reviewId}
                     >
                     <TableCell component="th" scope="row">{review.business_name}</TableCell>
-                    <TableCell align="left">{ellipsify(review.text)}</TableCell>
+                    <TableCell align="left">{review.text}</TableCell>
                     <TableCell align="right">{review.stars}</TableCell>
                     {(userId === userIdURL || isAdmin) && <TableCell align="right">
                             <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(review.businessId, review.userId, review.reviewId)}>
@@ -71,7 +74,7 @@ export const UserComponent = () => {
             </Table>
         </TableContainer>
         <div className="friendList">
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
+            <TableContainer component={Paper} style={{maxHeight: 600, overflow: 'auto', width: '50vw'}} >
                 <Table aria-label="simple table">
                     <TableHead >
                         <TableRow className="MuiTableHead-root">
@@ -93,6 +96,5 @@ export const UserComponent = () => {
     </div>
     
     );
-
-
 }
+

@@ -12,7 +12,6 @@ function App() {
   const { isLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
-    
   }, [isLoggedIn])
 
   return (

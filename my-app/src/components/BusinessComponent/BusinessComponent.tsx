@@ -6,14 +6,19 @@ import Header from "../HeaderComponent/Header"
 import { IBusiness } from "./BusinessInterface"
 import ReviewForm from "../UserComponent/ReviewForm"
 import DeleteIcon from '@mui/icons-material/Delete';
-import {LoggedInContext} from "../LoggedInContext"
-
+import {LoggedInContext} from "../LoggedInContext";
 
 const baseURL = "http://localhost:8080/api"
 
+
 export const BusinessComponent = () => {
     const [business, setBusiness] = useState<IBusiness>({_id: "", businessId: "", name: "", country: "", city: "", reviews: [] })
-    const {isAdmin} = useContext(LoggedInContext)
+    const {isAdmin} = useContext(LoggedInContext);
+    const [open, setOpen] = useState(false);
+
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     let {businessIdURL} = useParams();
 
@@ -46,7 +51,6 @@ export const BusinessComponent = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
-                        
                         <TableCell align="left">REVIEW</TableCell>
                         <TableCell align="right">STARS</TableCell>
                         {isAdmin && <TableCell align="right">DELETE</TableCell>}
@@ -57,7 +61,7 @@ export const BusinessComponent = () => {
                     <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                    <TableCell align="left">{review.text ? ellipsify(review.text): null}</TableCell>
+                    <TableCell align="left">{review.text}</TableCell>
                     <TableCell align="right">{review.stars}</TableCell>
                     {isAdmin && <TableCell align="right">
                             <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(review.businessId, review.userId, review.reviewId)}>
