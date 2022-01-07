@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 
 const Header = () => {
-    const { setIsLoggedIn, userId, userName } = useContext(LoggedInContext);
+    const { setAdmin, setIsLoggedIn, userId, userName, isAdmin } = useContext(LoggedInContext);
     
     return (
         <div>
@@ -38,9 +38,12 @@ const Header = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                            name: {userName}
                         </Typography>
-                        <Button color="inherit"><Link to={`user/${userId}`}>{userName}</Link></Button>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                           admin: {String(isAdmin)}
+                        </Typography>
+                        <Button color="inherit"><Link to={`/user/${userId}`}>{userName}</Link></Button>
                         <Button color="inherit"><Link to="/stats">Stats</Link></Button>
-                        <Button color="inherit" onClick={() => setIsLoggedIn(false)}>Logout</Button>
+                        <Button color="inherit" onClick={() => {setIsLoggedIn(false); setAdmin(false)}}>Logout</Button>
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -49,3 +52,4 @@ const Header = () => {
 };
 
 export default Header;
+

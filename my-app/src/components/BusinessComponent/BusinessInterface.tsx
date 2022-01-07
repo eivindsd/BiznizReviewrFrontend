@@ -1,13 +1,13 @@
 import { IReview } from "../UserComponent/UserComponentInterface";
 
 export interface IBusiness {
-    _id: String,
+    _id: string,
     businessId: string,
-    name: String,
-    country: String,
-    city: String,
-    state?: String,
-    topTags?: String[] | null,
-    categories?: String[] | null
+    name: string,
+    country: string,
+    city: string,
+    state?: string,
+    topTags?: string[] | null,
+    categories?: string[] | null
     reviews: IReview[]
 }

@@ -1,13 +1,23 @@
-import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper,  } from "@mui/material";
+import { TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Paper, IconButton,  } from "@mui/material";
 import { IUser } from "../UserComponent/UserComponentInterface";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { LoggedInContext }from "../LoggedInContext";
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import axios from "axios";
 
 interface IProps {
     users: IUser[]
 }
+const baseURL = "http://localhost:8080/api/user"
 
 export const LandingPageUser = (props:IProps) => {
+    const {isAdmin} = useContext(LoggedInContext)
 
+    const onDeleteClick = (id:string) => {
+        axios.delete(`${baseURL}/${id}`)
+    }
 
     if (props.users) {
         return (
@@ -16,6 +26,7 @@ export const LandingPageUser = (props:IProps) => {
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
                         <TableCell>USERS</TableCell>
+                        {isAdmin && <TableCell align="right">DELETE</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody className="reviewContainer">
@@ -25,6 +36,11 @@ export const LandingPageUser = (props:IProps) => {
                     key={user.userId}
                     >
                     <TableCell component="th" scope="row"> <Link to={`user/${user.userId}`}>{user.name}</Link></TableCell>
+                    {isAdmin && <TableCell align="right">
+                            <IconButton aria-label="delete" size="small" onClick={() => onDeleteClick(user.userId)}>
+                                <DeleteIcon fontSize="inherit"/>
+                            </IconButton>
+                        </TableCell>}
                     </TableRow>
                 ))}
                 </TableBody>

@@ -23,8 +23,8 @@ function App() {
                                   {!isLoggedIn &&  <Login /> }
                                   </div>}/>
           <Route path="stats" element={<Statistics />} />
-          <Route path="user/:userId" element={<UserComponent />} />
-          <Route path="business/:businessId" element={<BusinessComponent />} />
+          <Route path="user/:userIdURL" element={<UserComponent />} />
+          <Route path="business/:businessIdURL" element={<BusinessComponent />} />
         </Routes>
     </BrowserRouter>
     
