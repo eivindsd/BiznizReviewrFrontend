@@ -2,15 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 
 const BusinessFormAdmin = () => {
     const [name, setName] = React.useState<string>();
     const [country, setCountry] = React.useState<string>();
     const [city, setCity] = React.useState<string>();
     const [state, setState] = React.useState<string>();
-    const [topTags, setTopTags] = React.useState<string>();
     const [categories, setCategories] = React.useState<string>();
     const [open, setOpen] = React.useState(false);
 
@@ -26,26 +28,29 @@ const BusinessFormAdmin = () => {
       const handleStateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setState(event.currentTarget.value);
       };
-      const handleTopTagsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTopTags(event.currentTarget.value);
-      };
       const handleCategoriesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCategories(event.currentTarget.value);
       };
 
     const handleSubmit = async () => {
-        axios.post(`http://localhost:8080/business`,{
-            name: name,
-            country: country,
-            city: city,
-            state: state,
-            topTags: topTags,
-            categories: categories
-        }).then(
-          function(response) {
-              response.status === 201 ? setOpen(true) : setOpen(false);
-          }
-        )
+        const removeArrays: string | undefined = categories?.split(" ").join("");
+        const categoriesArray: string[] | undefined = removeArrays?.split(",");
+        console.log(name);
+        console.log(country);
+        console.log(city);
+        console.log(state);
+        console.log(categoriesArray);
+        axios.post(`http://localhost:8080/api/business`,{
+              name: name,
+              country: country,
+              city: city,
+              state: state,
+              categories: categoriesArray
+          }).then(
+            function(response) {
+                response.status === 201 ? setOpen(true) : setOpen(false);
+            }
+          )
     }
     return (
         <div style={{marginTop: '1vw'}}>
@@ -57,7 +62,7 @@ const BusinessFormAdmin = () => {
                 multiline
                 maxRows={10}
                 value={name}
-                //style={{width: '15%'}}
+                style={{width: '25%'}}
                 onChange={handleNameChange}
             />
             <TextField
@@ -66,7 +71,7 @@ const BusinessFormAdmin = () => {
                 multiline
                 maxRows={10}
                 value={country}
-                //style={{width: '15%'}}
+                style={{width: '25%'}}
                 onChange={handleCountryChange}
             />
             <TextField
@@ -75,7 +80,7 @@ const BusinessFormAdmin = () => {
                 multiline
                 maxRows={10}
                 value={city}
-                //style={{width: '15%'}}
+                style={{width: '25%'}}
                 onChange={handleCityChange}
             />
             <TextField
@@ -84,17 +89,8 @@ const BusinessFormAdmin = () => {
                 multiline
                 maxRows={10}
                 value={state}
-                //style={{width: '15%'}}
+                style={{width: '25%'}}
                 onChange={handleStateChange}
-            />
-            <TextField
-                id="outlined-multiline-flexible"
-                label="Top tags (comma separated)"
-                multiline
-                maxRows={10}
-                value={topTags}
-                //style={{width: '15%'}}
-                onChange={handleTopTagsChange}
             />
             <TextField
                 id="outlined-multiline-flexible"
@@ -102,10 +98,28 @@ const BusinessFormAdmin = () => {
                 multiline
                 maxRows={10}
                 value={categories}
-                //style={{width: '15%'}}
+                style={{width: '25%'}}
                 onChange={handleCategoriesChange}
             />
             </div>
+            <Box sx={{ width: '100%' }}>
+                <Collapse in={open}>
+                    <Alert
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                setOpen(false);
+                                }}>
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>}
+                        sx={{ mb: 2 }}>
+                        Successfully added new business!
+                    </Alert>
+                </Collapse>
+            </Box>
             
             <Button
                 type="submit"

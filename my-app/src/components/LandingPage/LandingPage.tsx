@@ -54,8 +54,8 @@ const LandingPage = () => {
                                 bgcolor: 'background.paper',
                                
                             }}>
-                            <LandingPageUser users={users}/>  
-                            <LandingPageBusiness businesses={businesses}/> 
+                            <LandingPageUser users={users}/>
+                            <LandingPageBusiness businesses={businesses}/>
                     </Box>         
                 </div>
                 </Box>
