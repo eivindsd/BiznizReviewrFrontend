@@ -21,11 +21,13 @@ const UserStats = () => {
     
     const [amountOfStarsUser, setAmountOfStarsUser] = useState<AmountOfStarsUser>();
 
+    let {userIdURL} = useParams()
+    
     useEffect(() => {
         getAmountOfStarsPerUser();
-    }, []);
+    }, [userIdURL]);
 
-    let {userIdURL} = useParams()
+    
 
     const getAmountOfStarsPerUser = async () => {
         setAmountOfStarsUser(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperuser/${userIdURL}`)).data);

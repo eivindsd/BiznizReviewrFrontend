@@ -40,7 +40,7 @@ export const UserComponent = () => {
             setMyFriends(response.data);
         });
         
-    }, [])
+    }, [userIdURL])
 
     const onFollowClick = (followId:string) => {
         axios.get(`${baseURL}/graph/user/follow/${userId}/${followId}`)
@@ -108,7 +108,7 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {suggestedBusinesses.map((business) => (
                             <TableRow key={business.businessId}>
-                                <TableCell scope="row"><Link to={`business/${business.businessId}`}>{business.name}</Link></TableCell>
+                                <TableCell scope="row"><Link to={`/business/${business.businessId}`}>{business.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
@@ -126,7 +126,7 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {friends.map((friend) => (
                             <TableRow key={friend.userId}>
-                                <TableCell scope="row"><Link to={`user/${user.userId}`}> {friend.name}</Link></TableCell>
+                                <TableCell scope="row"><Link to={`/user/${friend.userId}`}> {friend.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
@@ -144,7 +144,7 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {suggestedUsers.map((user) => (
                             <TableRow key={user.userId}>
-                                <TableCell scope="row"><Link to={`user/${user.userId}`}>{user.name}</Link></TableCell>
+                                <TableCell scope="row"><Link to={`/user/${user.userId}`}>{user.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
