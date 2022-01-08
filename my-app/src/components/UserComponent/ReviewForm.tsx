@@ -23,9 +23,7 @@ const ReviewForm: React.FC<IProps> = ({businessId, name}) => {
       };
 
       const handleSubmit = async () => {
-          console.log(review);
-          console.log(stars);
-          console.log(name);
+         
           axios.post(`http://localhost:8080/api/review/${businessId}/${userId}`,{
               stars: stars,
               text: review,

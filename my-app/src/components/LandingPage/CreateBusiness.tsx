@@ -35,11 +35,7 @@ const CreateBusiness = () => {
     const handleSubmit = async () => {
         const removeArrays: string | undefined = categories?.split(" ").join("");
         const categoriesArray: string[] | undefined = removeArrays?.split(",");
-        console.log(name);
-        console.log(country);
-        console.log(city);
-        console.log(state);
-        console.log(categoriesArray);
+       
         axios.post(`http://localhost:8080/api/business`,{
               name: name,
               country: country,

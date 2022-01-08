@@ -11,3 +11,8 @@ export interface IBusiness {
     categories?: string[] | null
     reviews: IReview[]
 }
+
+export interface ISuggestedBusiness {
+    businessId: string,
+    name: string
+}

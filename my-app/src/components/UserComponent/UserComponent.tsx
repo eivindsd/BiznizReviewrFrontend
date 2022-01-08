@@ -1,7 +1,7 @@
-import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton } from "@mui/material"
+import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton, Grid } from "@mui/material"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import { IFriends, IUser } from "./UserComponentInterface"
+import { IFriends, ISuggestedUser, IUser } from "./UserComponentInterface"
 import './User.css'
 import { LoggedInContext } from "../LoggedInContext"
 import { useParams } from "react-router-dom"
@@ -9,6 +9,8 @@ import Header from "../HeaderComponent/Header"
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateUserForm from "./UpdateUserForm"
+import UserStats from "../StatisticsComponent/UserStats"
+import { ISuggestedBusiness } from "../BusinessComponent/BusinessInterface"
 
 
 const baseURL = "http://localhost:8080/api"
@@ -16,30 +18,26 @@ const baseURL = "http://localhost:8080/api"
 export const UserComponent = () => {
     const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: []})
     const [friends, setFriends] = useState<IFriends[]>([])
+    const [suggestedUsers, setSuggestedUsers] = useState<ISuggestedUser[]>([])
+    const [suggestedBusinesses, setSuggestedBusinesses] = useState<ISuggestedBusiness[]>([])
     const {userId, isAdmin} = useContext(LoggedInContext);
  
     let {userIdURL} = useParams();
     useEffect(() => {
         axios.get(`${baseURL}/user/${userIdURL}`).then((response) => {
-            console.log(response.data);
             setUser(response.data);
         });
         axios.get(`${baseURL}/graph/user/following/${userIdURL}`).then((response) => {
-            console.log(response.data);
             setFriends(response.data);
+        });
+        axios.get(`${baseURL}/graph/user/suggestions/${userIdURL}`).then((response) => {
+            setSuggestedUsers(response.data);
+        });
+        axios.get(`${baseURL}/graph/business/suggestions/${userIdURL}`).then((response) => {
+            setSuggestedBusinesses(response.data);
         })
         
     }, [])
-
-    
-    const ellipsify = (str:String) => {
-        if (str.length > 100) {
-            return (str.substring(0, 100) + "...");
-        }
-        else {
-            return str;
-        }
-    }
 
 
     const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
@@ -51,8 +49,7 @@ export const UserComponent = () => {
         <Header />
         <h1>{user.name}'s page</h1>
         <Divider/>
-        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '1vw'}}>
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
+        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
             <Table  aria-label="simple table">
                 <TableHead >
                     <TableRow>
@@ -81,26 +78,69 @@ export const UserComponent = () => {
                 </TableBody>
             </Table>
         </TableContainer>
-        <div className="friendList">
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '50vw'}} >
-                <Table aria-label="simple table">
-                    <TableHead >
-                        <TableRow className="MuiTableHead-root">
-                            <TableCell>Following</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="reviewContainer">
-                    {friends.map((friend) => (
-                        <TableRow key={friend.userId}>
-                            <TableCell scope="row">{friend.name}</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            </div>
-            </Box>
-        <UpdateUserForm />
+        <Grid container sx={{padding: '1vw'}}>
+            <Grid container item xs={6} direction="column">
+                <UserStats /> 
+            </Grid>
+            <Grid container item xs={6} direction="column">
+                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+                    <Table aria-label="simple table">
+                        <TableHead >
+                            <TableRow className="MuiTableHead-root">
+                                <TableCell>Suggested Businesses</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className="reviewContainer">
+                        {suggestedBusinesses.map((business) => (
+                            <TableRow key={business.businessId}>
+                                <TableCell scope="row">{business.name}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer> 
+            </Grid>
+            <Grid container item xs={6} direction="column">
+                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+                    <Table aria-label="simple table">
+                        <TableHead >
+                            <TableRow className="MuiTableHead-root">
+                                <TableCell>Following</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className="reviewContainer">
+                        {friends.map((friend) => (
+                            <TableRow key={friend.userId}>
+                                <TableCell scope="row">{friend.name}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer> 
+            </Grid>
+            <Grid container item xs={6} direction="column" maxWidth="50%">
+                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+                    <Table aria-label="simple table">
+                        <TableHead >
+                            <TableRow className="MuiTableHead-root">
+                                <TableCell>Suggested Users</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className="reviewContainer">
+                        {suggestedUsers.map((user) => (
+                            <TableRow key={user.userId}>
+                                <TableCell scope="row">{user.name}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                </Grid>
+
+        </Grid>
+        
+        
+        {(isAdmin || userId==userIdURL) && <UpdateUserForm />}
     </div>
     
     );

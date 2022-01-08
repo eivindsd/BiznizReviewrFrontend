@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import { LoggedInContext } from "../LoggedInContext";
 import axios from 'axios';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,9 +7,7 @@ import { useParams } from 'react-router-dom';
 import { ProgressBar } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Box } from '@mui/material';
-import { maxWidth } from '@mui/system';
 import '../BusinessComponent/Business.css'
-import { tokenToString } from 'typescript';
 
 interface amountOfStarsBusiness {
     //businessId muligens
@@ -32,7 +29,6 @@ const BusinessStats = () => {
     let {businessIdURL} = useParams();
 
     const getAmountOfStarsPerBusiness = async () => {
-        //her må det endres til faktisk businessId
         setAmountOfStarsBusiness(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperbusiness/${businessIdURL}`)).data);
     }
 
@@ -55,7 +51,7 @@ const BusinessStats = () => {
         <Card sx={{ maxWidth: '50vw'}}>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                Business: {amountOfStarsBusiness?.businessid}
+                Business:
                 </Typography>
                 <Box sx={{display:'flex', flexWrap: 'wrap', alignItems: 'center', maxWidth: '50vw'}}>
                     <Typography> 5 stars: </Typography>
@@ -77,25 +73,7 @@ const BusinessStats = () => {
                     <Typography> 1 stars: </Typography>
                     <ProgressBar variant="info" label={`${Math.round(calculatePercentage(Number(amountOfStarsBusiness?.amountOne)))}%`} now={calculatePercentage(Number(amountOfStarsBusiness?.amountOne))} />
                 </Box>
-                
-                
-                
-
-                {/* <Typography >
-                Number of 5-stars reviews given: {amountOfStarsBusiness?.amountFive}
-                </Typography>
-                <Typography >
-                Number of 4-stars reviews given: {amountOfStarsBusiness?.amountFour}
-                </Typography>
-                <Typography >
-                Number of 3-stars reviews given: {amountOfStarsBusiness?.amountThree}
-                </Typography>
-                <Typography >
-                Number of 2-stars reviews given: {amountOfStarsBusiness?.amountTwo}
-                </Typography>
-                <Typography >
-                Number of 1-stars reviews given: {amountOfStarsBusiness?.amountOne}
-                </Typography> */}
+       
             </CardContent>
                 
         </Card>
