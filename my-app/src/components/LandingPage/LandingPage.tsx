@@ -22,7 +22,7 @@ const LandingPage = () => {
     const { isAdmin } = useContext(LoggedInContext);
 
     const searchUser = () => {
-        if (userSearch.length == 0) {
+        if (userSearch.length === 0) {
             axios.get(`${baseURL}/user`).then((response) => {
                 setUsers(response.data);
             })
@@ -34,7 +34,7 @@ const LandingPage = () => {
     }
 
     const searchBusiness = () => {
-        if (businessSearch.length == 0) {
+        if (businessSearch.length === 0) {
             axios.get(`${baseURL}/business`).then((response) => {
                 setBusinesses(response.data)
             })
@@ -59,14 +59,15 @@ const LandingPage = () => {
                         <Button variant="contained" style={{ width: '100%', marginBottom: '1vw'}}  onClick={searchBusiness}>Search</Button>
                     </Grid>
                 </Grid>
-                <div style={{ width: '100%' }}>
+                <div style={{ width: '100%', height: '30vw'}}>
                     <Box
                             sx={{
                                 display: 'flex',
                                 p: 1,
                                 m: 1,
                                 bgcolor: 'background.paper',
-                               
+                                height: '100%'
+
                             }}>
                             <LandingPageUser users={users}/>
                             <LandingPageBusiness businesses={businesses}/>

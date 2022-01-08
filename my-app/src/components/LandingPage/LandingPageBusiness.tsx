@@ -21,7 +21,7 @@ export const LandingPageBusiness = (props:IProps) => {
 
     if (props.businesses) {
         return (
-        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
+        <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
             <Table aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
@@ -49,7 +49,7 @@ export const LandingPageBusiness = (props:IProps) => {
         )
     } else {
         return (
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
+            <TableContainer component={Paper} style={{height: '100%', overflow: 'auto'}} >
             <Table aria-label="simple table" stickyHeader className="MuiTableHead-root">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">

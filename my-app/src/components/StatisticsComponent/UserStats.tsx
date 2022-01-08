@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { LoggedInContext } from "../LoggedInContext";
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { ProgressBar } from 'react-bootstrap';
 import { Box } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 
 interface AmountOfStarsUser {
@@ -20,20 +20,21 @@ interface AmountOfStarsUser {
 const UserStats = () => {
     
     const [amountOfStarsUser, setAmountOfStarsUser] = useState<AmountOfStarsUser>();
-    const { userId, userName } = React.useContext(LoggedInContext);
 
     useEffect(() => {
         getAmountOfStarsPerUser();
     }, []);
 
+    let {userIdURL} = useParams()
+
     const getAmountOfStarsPerUser = async () => {
-        setAmountOfStarsUser(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperuser/${userId}`)).data);
+        setAmountOfStarsUser(await (await axios.get(`http://localhost:8080/api/aggregations/amountofstarsperuser/${userIdURL}`)).data);
     }
 
     const calculatePercentage = (num: number) => {
         const tot: number = Number((Number(amountOfStarsUser?.amountFive) + Number(amountOfStarsUser?.amountFour) + Number(amountOfStarsUser?.amountThree) +
         Number(amountOfStarsUser?.amountTwo) + Number(amountOfStarsUser?.amountOne)))
-        if (tot != 0) {
+        if (tot !== 0) {
             return(
                 100 * num/tot
             )

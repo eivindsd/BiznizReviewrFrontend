@@ -1,12 +1,11 @@
-import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton, Grid } from "@mui/material"
+import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody, Paper, Divider, IconButton, Grid, Button } from "@mui/material"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { IFriends, ISuggestedUser, IUser } from "./UserComponentInterface"
 import './User.css'
 import { LoggedInContext } from "../LoggedInContext"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Header from "../HeaderComponent/Header"
-import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateUserForm from "./UpdateUserForm"
 import UserStats from "../StatisticsComponent/UserStats"
@@ -18,6 +17,7 @@ const baseURL = "http://localhost:8080/api"
 export const UserComponent = () => {
     const [user, setUser] = useState<IUser>({_id: "", userId: "", name: "", password: "", reviews: []})
     const [friends, setFriends] = useState<IFriends[]>([])
+    const [myFriends, setMyFriends] = useState<IFriends[]>([])
     const [suggestedUsers, setSuggestedUsers] = useState<ISuggestedUser[]>([])
     const [suggestedBusinesses, setSuggestedBusinesses] = useState<ISuggestedBusiness[]>([])
     const {userId, isAdmin} = useContext(LoggedInContext);
@@ -36,12 +36,27 @@ export const UserComponent = () => {
         axios.get(`${baseURL}/graph/business/suggestions/${userIdURL}`).then((response) => {
             setSuggestedBusinesses(response.data);
         })
+        axios.get(`${baseURL}/graph/user/following/${userId}`).then((response) => {
+            setMyFriends(response.data);
+        });
         
     }, [])
 
+    const onFollowClick = (followId:string) => {
+        axios.get(`${baseURL}/graph/user/follow/${userId}/${followId}`)
+    }
 
     const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
         axios.delete(`${baseURL}/review/${businessid}/${userid}/${reviewid}`)
+    }
+
+    const isInFriends = (friends: IFriends[]) => {
+        friends.map((friend) => {
+            if (friend.userId === userIdURL || friend.userId === userId) {
+                return false
+            }
+        })
+        return true
     }
 
     return (
@@ -79,11 +94,11 @@ export const UserComponent = () => {
             </Table>
         </TableContainer>
         <Grid container sx={{padding: '1vw'}}>
-            <Grid container item xs={6} direction="column">
+            <Grid container item xs={6} direction="column" style={{height: '20vw'}}>
                 <UserStats /> 
             </Grid>
-            <Grid container item xs={6} direction="column">
-                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+            <Grid container item xs={6} direction="column" >
+                <TableContainer component={Paper} style={{overflow: 'auto', width: '48vw', height: '20vw'}} >
                     <Table aria-label="simple table">
                         <TableHead >
                             <TableRow className="MuiTableHead-root">
@@ -93,15 +108,15 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {suggestedBusinesses.map((business) => (
                             <TableRow key={business.businessId}>
-                                <TableCell scope="row">{business.name}</TableCell>
+                                <TableCell scope="row"><Link to={`business/${business.businessId}`}>{business.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
                     </Table>
                 </TableContainer> 
             </Grid>
-            <Grid container item xs={6} direction="column">
-                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+            <Grid container item xs={6} direction="column" paddingTop={'1vw'}>
+                <TableContainer component={Paper} style={{overflow: 'auto', width: '48vw', height: '20vw'}} >
                     <Table aria-label="simple table">
                         <TableHead >
                             <TableRow className="MuiTableHead-root">
@@ -111,15 +126,15 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {friends.map((friend) => (
                             <TableRow key={friend.userId}>
-                                <TableCell scope="row">{friend.name}</TableCell>
+                                <TableCell scope="row"><Link to={`user/${user.userId}`}> {friend.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
                     </Table>
                 </TableContainer> 
             </Grid>
-            <Grid container item xs={6} direction="column" maxWidth="50%">
-                <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width: '48vw'}} >
+            <Grid container item xs={6} direction="column" maxWidth="50%" paddingTop={'1vw'}>
+                <TableContainer component={Paper} style={{overflow: 'auto', width: '48vw', height: '20vw'}} >
                     <Table aria-label="simple table">
                         <TableHead >
                             <TableRow className="MuiTableHead-root">
@@ -129,7 +144,7 @@ export const UserComponent = () => {
                         <TableBody className="reviewContainer">
                         {suggestedUsers.map((user) => (
                             <TableRow key={user.userId}>
-                                <TableCell scope="row">{user.name}</TableCell>
+                                <TableCell scope="row"><Link to={`user/${user.userId}`}>{user.name}</Link></TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
@@ -138,9 +153,14 @@ export const UserComponent = () => {
                 </Grid>
 
         </Grid>
-        
-        
-        {(isAdmin || userId==userIdURL) && <UpdateUserForm />}
+        {(isAdmin || userId===userIdURL) && <UpdateUserForm />}
+        {isInFriends(myFriends) && <Button 
+                                        type="submit"
+                                        style={{width: '40%'}}
+                                        variant="contained"
+                                        sx={{ mt: 1, mb: 2 }}
+                                        onClick={() => onFollowClick(user.userId)}> FOLLOW 
+                                    </Button>}                   
     </div>
     
     );

@@ -20,7 +20,7 @@ export const LandingPageUser: React.FC<IProps> = ({users}) => {
     }
     
     return (
-            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto', width:"500vw"}} >
+            <TableContainer component={Paper} style={{maxHeight: 400, overflow: 'auto'}} >
             <Table aria-label="simple table">
                 <TableHead >
                     <TableRow className="MuiTableHead-root">
