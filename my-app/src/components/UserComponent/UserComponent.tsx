@@ -43,7 +43,7 @@ export const UserComponent = () => {
     }, [userIdURL])
 
     const onFollowClick = (followId:string) => {
-        axios.get(`${baseURL}/graph/user/follow/${userId}/${followId}`)
+        axios.put(`${baseURL}/graph/user/follow/${userId}/${followId}`)
     }
 
     const onDeleteClick = (businessid:string, userid:string, reviewid:string) => {
