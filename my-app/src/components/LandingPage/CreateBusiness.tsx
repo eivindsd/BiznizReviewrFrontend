@@ -47,13 +47,6 @@ const CreateBusiness = () => {
                 response.status === 201 ? setOpen(true) : setOpen(false);
             }
           )
-          axios.post(`http://localhost:8080/api/graph/business`,{
-              name: name
-          }).then(
-            function(response) {
-                response.status === 201 ? setOpen(true) : setOpen(false);
-            }
-          )
     }
     return (
         <div style={{marginTop: '1vw'}}>
