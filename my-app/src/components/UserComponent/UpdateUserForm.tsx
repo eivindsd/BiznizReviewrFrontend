@@ -9,8 +9,13 @@ import Alert from '@mui/material/Alert';
 import { LoggedInContext } from '../LoggedInContext';
 import axios from 'axios';
 import "./UpdateUserForm.css";
+import { IReview } from './UserComponentInterface';
 
-const UpdateUserForm = () => {
+interface IProps {
+  reviews: IReview[]
+}
+
+const UpdateUserForm = (props:IProps) => {
     const [name, setName] = React.useState<string | undefined>();
     const [password, setPassword] = React.useState<string | undefined>();
     const [open, setOpen] = React.useState(false);
@@ -19,7 +24,8 @@ const UpdateUserForm = () => {
     const handleSubmit = async () => {
         axios.put(`http://localhost:8080/api/user/${userId}`,{
               name: name,
-              password: password
+              password: password,
+              reviews: props.reviews
           }).then(
             function(response) {
                 response.status === 200 ? setOpen(true) : setOpen(false);
