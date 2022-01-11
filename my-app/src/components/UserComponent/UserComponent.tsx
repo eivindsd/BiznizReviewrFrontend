@@ -102,7 +102,7 @@ export const UserComponent = () => {
                     <Table aria-label="simple table">
                         <TableHead >
                             <TableRow className="MuiTableHead-root">
-                                <TableCell>Suggested Businesses</TableCell>
+                                <TableCell>Suggested Businesses for {user.name}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody className="reviewContainer">
@@ -138,7 +138,7 @@ export const UserComponent = () => {
                     <Table aria-label="simple table">
                         <TableHead >
                             <TableRow className="MuiTableHead-root">
-                                <TableCell>Suggested Users</TableCell>
+                                <TableCell>Suggested Users for {user.name}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody className="reviewContainer">
@@ -154,7 +154,7 @@ export const UserComponent = () => {
 
         </Grid>
         {(isAdmin || userId===userIdURL) && <UpdateUserForm />}
-        {isInFriends(myFriends) && <Button 
+        {isInFriends(myFriends) && userId !== userIdURL && <Button 
                                         type="submit"
                                         style={{width: '40%'}}
                                         variant="contained"
