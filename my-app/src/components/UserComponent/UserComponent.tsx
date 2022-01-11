@@ -151,9 +151,8 @@ export const UserComponent = () => {
                     </Table>
                 </TableContainer>
                 </Grid>
-
         </Grid>
-        {(isAdmin || userId===userIdURL) && <UpdateUserForm />}
+        {(isAdmin || userId===userIdURL) && <UpdateUserForm reviews={user.reviews}/>}
         {isInFriends(myFriends) && userId !== userIdURL && <Button 
                                         type="submit"
                                         style={{width: '40%'}}
