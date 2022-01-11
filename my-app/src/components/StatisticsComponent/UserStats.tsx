@@ -51,7 +51,7 @@ const UserStats = () => {
         <Card sx={{ maxWidth: '48vw'}}>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                Business: 
+                Business ratings: 
                 </Typography>
                 <Box sx={{display:'flex', flexWrap: 'wrap', alignItems: 'center', maxWidth: '50vw'}}>
                     <Typography> 5 stars: </Typography>
