@@ -84,7 +84,7 @@ export const BusinessComponent = () => {
             </div>
             <div style={{ width: '24%', paddingRight: '1vw'}}>
             {business.topTags &&
-                    <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"500vw"}} >
+                    <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"35vw"}} >
                     <Table>
                         <TableHead>
                             <TableRow className="MuiTableHead-root">
@@ -104,7 +104,7 @@ export const BusinessComponent = () => {
                 </TableContainer>
                     }
                     {business.categories &&
-                     <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"500vw"}} >
+                     <TableContainer component={Paper} style={{maxHeight: "20vw", overflow: 'auto', width:"35vw"}} >
                         <Table>
                             <TableHead>
                                 <TableRow className="MuiTableHead-root">
